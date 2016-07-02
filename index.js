@@ -9,7 +9,8 @@ if (process.argv.length < 3) {
 }
 
 var arg_path        = process.argv[2]
-var folder          = arg_path.startsWith('/') ? arg_path : `${process.cwd()}/${arg_path}`.replace(/\/+$/, '')
+var folder          = arg_path.startsWith('/') ? arg_path : `${process.cwd()}/${arg_path}`
+folder              = folder.replace(/\/+$/, '') // remove trailing slash
 var folder_small    = `${folder}-small`
 var width           = process.argv.length > 3 ? parseInt(process.argv[3]) : 900
 var height          = process.argv.length > 4 ? parseInt(process.argv[4]) : 600
