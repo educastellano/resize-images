@@ -1,8 +1,11 @@
 {
-  "name": "@educastellano/resize",
+  "name": "resize-images",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "resize-images": "./index.js"
+  },
   "dependencies": {
     "sharp": "^0.15.0"
   },

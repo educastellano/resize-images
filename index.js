@@ -7,7 +7,7 @@ if (process.argv.length < 3) {
     process.exit(-1)
 }
 
-var folder          = process.argv[2]
+var folder          = `${process.cwd()}/${process.argv[2]}`.replace(/\/+$/, '')
 var folder_small    = `${folder}-small`
 var width           = process.argv.length > 3 ? parseInt(process.argv[3]) : 900
 var height          = process.argv.length > 4 ? parseInt(process.argv[4]) : 600
@@ -19,6 +19,7 @@ if (!fs.existsSync(folder_small)){
 fs.readdirSync(folder).forEach((file) => {
     var path        = `${folder}/${file}`
     var path_small  = `${folder_small}/${file}`
+    
     fs.readFile(path, (err, data) => {
         if (err) throw err
         sharp(path)
