@@ -2,7 +2,11 @@
 
 Resize images in a directory.
 
-# Install
+## Prerequisites
+
+* [libvips](https://github.com/jcupitt/libvips)
+
+## Install
 
     npm install resize-images -g
 
