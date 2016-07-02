@@ -1,6 +1,7 @@
 #!/usr/local/bin/node
 var sharp   = require('sharp')
 var fs      = require('fs')
+var isImage = require('is-image')
 
 if (process.argv.length < 3) {
     console.log('Missing parameter "folder"')
@@ -20,16 +21,16 @@ fs.readdirSync(folder).forEach((file) => {
     var path        = `${folder}/${file}`
     var path_small  = `${folder_small}/${file}`
     
-    fs.readFile(path, (err, data) => {
-        if (err) throw err
-        sharp(path)
-            .resize(width, height)
-            // .background('white')
-            .embed()
-            .toFile(path_small, function(err) {
-                console.log(`* ${path_small}`)
-            })
-    })
+    if (isImage(path)) {
+        fs.readFile(path, (err, data) => {
+            if (err) throw err
+            sharp(path)
+                .resize(width, height)
+                // .background('white')
+                .embed()
+                .toFile(path_small, function(err) {
+                    console.log(`* ${path_small}`)
+                })
+        })
+    }
 })
-
-
