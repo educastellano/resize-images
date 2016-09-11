@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "is-image": "^1.0.1",
+    "minimist": "^1.2.0",
     "sharp": "^0.15.0"
   },
   "devDependencies": {},

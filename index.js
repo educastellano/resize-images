@@ -2,23 +2,38 @@
 var sharp   = require('sharp')
 var fs      = require('fs')
 var isImage = require('is-image')
+var argv = require('minimist')(process.argv.slice(2), {
+    default : {
+        width       : 900,
+        height      : 600,
+        background  : 'white'
+    },
+    alias: {
+        w: 'width',
+        h: 'height',
+        b: 'background'
+    }
+})
 
-if (process.argv.length < 3) {
+if (argv._.length < 1) {
     console.log('Missing parameter "folder"')
     process.exit(-1)
 }
 
-var arg_path        = process.argv[2]
-var folder          = arg_path.startsWith('/') ? arg_path : `${process.cwd()}/${arg_path}`
+// Args
+var folder          = argv._[0].startsWith('/') ? argv._[0] : `${process.cwd()}/${argv._[0]}`
 folder              = folder.replace(/\/+$/, '') // remove trailing slash
 var folder_small    = `${folder}-small`
-var width           = process.argv.length > 3 ? parseInt(process.argv[3]) : 900
-var height          = process.argv.length > 4 ? parseInt(process.argv[4]) : 600
+var width           = argv.width
+var height          = argv.height
+var background      = argv.background
 
+// Create folder if not exist
 if (!fs.existsSync(folder_small)){
     fs.mkdirSync(folder_small);
 }
 
+// Resize
 fs.readdirSync(folder).forEach((file) => {
     var path        = `${folder}/${file}`
     var path_small  = `${folder_small}/${file}`
@@ -28,7 +43,7 @@ fs.readdirSync(folder).forEach((file) => {
             if (err) throw err
             sharp(path)
                 .resize(width, height)
-                // .background('white')
+                .background(background)
                 .embed()
                 .toFile(path_small, function(err) {
                     console.log(`* ${path_small}`)
