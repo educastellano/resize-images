@@ -12,7 +12,7 @@ Resize images in a directory.
 
 ## Usage
 
-    resize-images albums/selfies 300 200
+    resize-images albums/selfies -w 300 -h 200
 
 * it creates the folder `album/selfies-small`
 
