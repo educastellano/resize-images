@@ -14,7 +14,7 @@ Resize images in a directory.
 
     resize-images albums/selfies -w 300 -h 200
 
-* it creates the folder `album/selfies-small`
+* it creates the folder `album/selfies-resized`
 
 ## Changelog
 

@@ -23,20 +23,20 @@ if (argv._.length < 1) {
 // Args
 var folder          = argv._[0].startsWith('/') ? argv._[0] : `${process.cwd()}/${argv._[0]}`
 folder              = folder.replace(/\/+$/, '') // remove trailing slash
-var folder_small    = `${folder}-small`
+var folder_resized  = `${folder}-resized`
 var width           = argv.width
 var height          = argv.height
 var background      = argv.background
 
 // Create folder if not exist
-if (!fs.existsSync(folder_small)){
-    fs.mkdirSync(folder_small);
+if (!fs.existsSync(folder_resized)){
+    fs.mkdirSync(folder_resized);
 }
 
 // Resize
 fs.readdirSync(folder).forEach((file) => {
     var path        = `${folder}/${file}`
-    var path_small  = `${folder_small}/${file}`
+    var path_resized  = `${folder_resized}/${file}`
     
     if (isImage(path)) {
         fs.readFile(path, (err, data) => {
@@ -45,8 +45,8 @@ fs.readdirSync(folder).forEach((file) => {
                 .resize(width, height)
                 .background(background)
                 .embed()
-                .toFile(path_small, function(err) {
-                    console.log(`* ${path_small}`)
+                .toFile(path_resized, function(err) {
+                    console.log(`* ${path_resized}`)
                 })
         })
     }
