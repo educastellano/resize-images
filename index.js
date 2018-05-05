@@ -6,12 +6,14 @@ var argv = require('minimist')(process.argv.slice(2), {
     default : {
         width       : 900,
         height      : 600,
-        background  : 'white'
+        background  : 'white',
+        square      : false
     },
     alias: {
         w: 'width',
         h: 'height',
-        b: 'background'
+        b: 'background',
+        s: 'square'
     }
 })
 
@@ -27,10 +29,21 @@ var folder_resized  = `${folder}-resized`
 var width           = argv.width
 var height          = argv.height
 var background      = argv.background
+var square          = argv.square
 
 // Create folder if not exist
 if (!fs.existsSync(folder_resized)){
     fs.mkdirSync(folder_resized);
+}
+
+function resize(path, width, height, background, path_resized) {
+    sharp(path)
+        .resize(width, height)
+        .background(background)
+        .embed()
+        .toFile(path_resized, function(err) {
+            console.log(`* ${path_resized}`)
+        })
 }
 
 // Resize
@@ -41,13 +54,16 @@ fs.readdirSync(folder).forEach((file) => {
     if (isImage(path)) {
         fs.readFile(path, (err, data) => {
             if (err) throw err
-            sharp(path)
-                .resize(width, height)
-                .background(background)
-                .embed()
-                .toFile(path_resized, function(err) {
-                    console.log(`* ${path_resized}`)
-                })
+            if (square) {
+                sharp(path)
+                    .metadata((err, metadata) => {
+                        width = height = Math.max(metadata.width, metadata.height)
+                        resize(path, width, height, background, path_resized)
+                    })
+            }
+            else {
+                resize(path, width, height, background, path_resized)    
+            }
         })
     }
 })
