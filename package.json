@@ -13,12 +13,15 @@
   "dependencies": {
     "is-image": "^1.0.1",
     "minimist": "^1.2.0",
-    "sharp": "^0.15.0"
+    "sharp": "^0.33.1"
   },
-  "devDependencies": {},
   "scripts": {
+    "lint": "standard",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^17.1.0"
+  }
 }

@@ -12,7 +12,13 @@ Resize images in a directory.
 
 ## Usage
 
+Specifying width and height:
+
     resize-images albums/selfies -w 300 -h 200
+
+Squared image:
+
+    resize-images albums/selfies --square
 
 * it creates the folder `album/selfies-resized`
 
